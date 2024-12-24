@@ -7,20 +7,55 @@
   },
   "item": [
     {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"your_username\",\n  \"password\": \"your_password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Stock",
       "item": [
         {
           "name": "Get All Stock",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/stocks"
+            "url": "{{baseUrl}}/stocks",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Stock By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/stocks/:id"
+            "url": "{{baseUrl}}/stocks/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -28,6 +63,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/stocks",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"cantidad\": 100,\n  \"producto_id\": \"UUID\"\n}",
@@ -44,6 +86,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/stocks/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"cantidad\": 150,\n  \"producto_id\": \"UUID\"\n}",
@@ -59,7 +108,14 @@
           "name": "Delete Stock",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/stocks/:id"
+            "url": "{{baseUrl}}/stocks/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -71,14 +127,28 @@
           "name": "Get All Sales",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/sales"
+            "url": "{{baseUrl}}/sales",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Sale By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/sales/:id"
+            "url": "{{baseUrl}}/sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -86,6 +156,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/sales",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"detalle\": \"Venta de productos\",\n  \"total\": 200.50,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
@@ -102,6 +179,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"detalle\": \"Venta actualizada\",\n  \"total\": 250.75,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
@@ -117,7 +201,14 @@
           "name": "Delete Sale",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/sales/:id"
+            "url": "{{baseUrl}}/sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -129,14 +220,28 @@
           "name": "Get All Products",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/products"
+            "url": "{{baseUrl}}/products",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Product By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/products/:id"
+            "url": "{{baseUrl}}/products/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -144,6 +249,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/products",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"detalle\": \"Producto nuevo\",\n  \"nombre\": \"Producto A\",\n  \"precio\": 50.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
@@ -160,6 +272,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/products/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"detalle\": \"Producto actualizado\",\n  \"nombre\": \"Producto B\",\n  \"precio\": 60.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
@@ -175,7 +294,14 @@
           "name": "Delete Product",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/products/:id"
+            "url": "{{baseUrl}}/products/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -187,14 +313,28 @@
           "name": "Get All Product Types",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/product-types"
+            "url": "{{baseUrl}}/product-types",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Product Type By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/product-types/:id"
+            "url": "{{baseUrl}}/product-types/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -202,6 +342,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/product-types",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Tipo A\",\n  \"codigo\": \"A001\",\n  \"descripcion\": \"Descripción del tipo A\"\n}",
@@ -218,6 +365,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/product-types/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Tipo B\",\n  \"codigo\": \"B001\",\n  \"descripcion\": \"Descripción del tipo B\"\n}",
@@ -233,7 +387,14 @@
           "name": "Delete Product Type",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/product-types/:id"
+            "url": "{{baseUrl}}/product-types/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -245,14 +406,28 @@
           "name": "Get All Product Sales",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/product-sales"
+            "url": "{{baseUrl}}/product-sales",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Product Sale By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/product-sales/:id"
+            "url": "{{baseUrl}}/product-sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -260,6 +435,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/product-sales",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"precioUnitario\": 30.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
@@ -276,6 +458,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/product-sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"precioUnitario\": 35.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
@@ -291,7 +480,14 @@
           "name": "Delete Product Sale",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/product-sales/:id"
+            "url": "{{baseUrl}}/product-sales/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -303,14 +499,28 @@
           "name": "Get All Customers",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/customers"
+            "url": "{{baseUrl}}/customers",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
           "name": "Get Customer By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/customers/:id"
+            "url": "{{baseUrl}}/customers/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         },
         {
@@ -318,6 +528,13 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/customers",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"razonSocial\": \"Empresa XYZ\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"email\": \"juan.perez@example.com\",\n  \"cuit\": \"20-12345678-9\"\n}",
@@ -334,6 +551,13 @@
           "request": {
             "method": "PUT",
             "url": "{{baseUrl}}/customers/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"razonSocial\": \"Empresa ABC\",\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"email\": \"carlos.gomez@example.com\",\n  \"cuit\": \"20-87654321-0\"\n}",
@@ -349,7 +573,14 @@
           "name": "Delete Customer",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/customers/:id"
+            "url": "{{baseUrl}}/customers/:id",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}",
+                "type": "text"
+              }
+            ]
           }
         }
       ]
@@ -359,6 +590,10 @@
     {
       "key": "baseUrl",
       "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "jwtToken",
+      "value": ""
     }
   ]
 }

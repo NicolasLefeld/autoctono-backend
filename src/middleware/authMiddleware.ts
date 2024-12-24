@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+import { Request } from "../global";
 import jwt from "jsonwebtoken";
 
 export const authenticateJWT = (
@@ -9,7 +10,8 @@ export const authenticateJWT = (
   const token = req.header("Authorization")?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ message: "Access denied" });
+    res.status(401).json({ message: "Access denied" });
+    return;
   }
 
   try {
@@ -17,6 +19,6 @@ export const authenticateJWT = (
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(400).json({ message: "Invalid token" });
+    res.status(400).json({ message: "Invalid token" });
   }
 };
