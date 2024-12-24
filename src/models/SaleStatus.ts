@@ -2,21 +2,21 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
 const SaleStatus = sequelize.define("SaleStatus", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  nombre: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  codigo: {
+  code: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  descripcion: {
+  description: {
     type: DataTypes.STRING,
     allowNull: true,
   },

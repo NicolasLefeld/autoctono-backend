@@ -7,10 +7,10 @@
   },
   "item": [
     {
-      "name": "Stocks",
+      "name": "Stock",
       "item": [
         {
-          "name": "Get All Stocks",
+          "name": "Get All Stock",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/stocks"
@@ -27,14 +27,32 @@
           "name": "Create Stock",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/stocks"
+            "url": "{{baseUrl}}/stocks",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 100,\n  \"producto_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
           "name": "Update Stock",
           "request": {
             "method": "PUT",
-            "url": "{{baseUrl}}/stocks/:id"
+            "url": "{{baseUrl}}/stocks/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 150,\n  \"producto_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
@@ -67,14 +85,32 @@
           "name": "Create Sale",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/sales"
+            "url": "{{baseUrl}}/sales",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detalle\": \"Venta de productos\",\n  \"total\": 200.50,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
           "name": "Update Sale",
           "request": {
             "method": "PUT",
-            "url": "{{baseUrl}}/sales/:id"
+            "url": "{{baseUrl}}/sales/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detalle\": \"Venta actualizada\",\n  \"total\": 250.75,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
@@ -87,41 +123,175 @@
       ]
     },
     {
-      "name": "Inventory",
+      "name": "Products",
       "item": [
         {
-          "name": "Get All Inventory",
+          "name": "Get All Products",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/inventory"
+            "url": "{{baseUrl}}/products"
           }
         },
         {
-          "name": "Get Inventory By ID",
+          "name": "Get Product By ID",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/inventory/:id"
+            "url": "{{baseUrl}}/products/:id"
           }
         },
         {
-          "name": "Create Inventory",
+          "name": "Create Product",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/inventory"
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detalle\": \"Producto nuevo\",\n  \"nombre\": \"Producto A\",\n  \"precio\": 50.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
-          "name": "Update Inventory",
+          "name": "Update Product",
           "request": {
             "method": "PUT",
-            "url": "{{baseUrl}}/inventory/:id"
+            "url": "{{baseUrl}}/products/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detalle\": \"Producto actualizado\",\n  \"nombre\": \"Producto B\",\n  \"precio\": 60.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
-          "name": "Delete Inventory",
+          "name": "Delete Product",
           "request": {
             "method": "DELETE",
-            "url": "{{baseUrl}}/inventory/:id"
+            "url": "{{baseUrl}}/products/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Types",
+      "item": [
+        {
+          "name": "Get All Product Types",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product-types"
+          }
+        },
+        {
+          "name": "Get Product Type By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product-types/:id"
+          }
+        },
+        {
+          "name": "Create Product Type",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/product-types",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tipo A\",\n  \"codigo\": \"A001\",\n  \"descripcion\": \"Descripción del tipo A\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Product Type",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/product-types/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tipo B\",\n  \"codigo\": \"B001\",\n  \"descripcion\": \"Descripción del tipo B\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Product Type",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/product-types/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Sales",
+      "item": [
+        {
+          "name": "Get All Product Sales",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product-sales"
+          }
+        },
+        {
+          "name": "Get Product Sale By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/product-sales/:id"
+          }
+        },
+        {
+          "name": "Create Product Sale",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/product-sales",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precioUnitario\": 30.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Product Sale",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/product-sales/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precioUnitario\": 35.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Product Sale",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/product-sales/:id"
           }
         }
       ]
@@ -147,14 +317,32 @@
           "name": "Create Customer",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/customers"
+            "url": "{{baseUrl}}/customers",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razonSocial\": \"Empresa XYZ\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"email\": \"juan.perez@example.com\",\n  \"cuit\": \"20-12345678-9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
           "name": "Update Customer",
           "request": {
             "method": "PUT",
-            "url": "{{baseUrl}}/customers/:id"
+            "url": "{{baseUrl}}/customers/:id",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razonSocial\": \"Empresa ABC\",\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"email\": \"carlos.gomez@example.com\",\n  \"cuit\": \"20-87654321-0\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {

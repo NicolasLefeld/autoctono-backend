@@ -4,12 +4,12 @@ import Customer from "./Customer";
 import SaleStatus from "./SaleStatus";
 
 const Sale = sequelize.define("Sale", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  detalle: {
+  detail: {
     type: DataTypes.STRING,
     allowNull: true,
   },
@@ -17,18 +17,18 @@ const Sale = sequelize.define("Sale", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  cliente_id: {
-    type: DataTypes.UUID,
+  customerId: {
+    type: DataTypes.INTEGER,
     references: {
       model: Customer,
-      key: "UniqueID",
+      key: "id",
     },
   },
-  estado_id: {
-    type: DataTypes.UUID,
+  statusId: {
+    type: DataTypes.INTEGER,
     references: {
       model: SaleStatus,
-      key: "UniqueID",
+      key: "id",
     },
   },
 });

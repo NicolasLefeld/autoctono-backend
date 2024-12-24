@@ -4,27 +4,27 @@ import Product from "./Product";
 import Sale from "./Sale";
 
 const ProductSale = sequelize.define("ProductSale", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  precioUnitario: {
+  unitPrice: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  producto_id: {
-    type: DataTypes.UUID,
+  productId: {
+    type: DataTypes.INTEGER,
     references: {
       model: Product,
-      key: "UniqueID",
+      key: "id",
     },
   },
-  venta_id: {
-    type: DataTypes.UUID,
+  saleId: {
+    type: DataTypes.INTEGER,
     references: {
       model: Sale,
-      key: "UniqueID",
+      key: "id",
     },
   },
 });

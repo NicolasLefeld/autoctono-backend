@@ -2,20 +2,24 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
 const User = sequelize.define("User", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  nombre: {
+  firstName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  apellido: {
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  contraseña: {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },

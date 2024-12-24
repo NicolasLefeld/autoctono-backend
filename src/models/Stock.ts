@@ -3,24 +3,24 @@ import sequelize from "../config/database";
 import Product from "./Product";
 
 const Stock = sequelize.define("Stock", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  cantidad: {
+  quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       min: 0,
-      max: 25000,
+      max: 100000, // 100000gr = 100kg
     },
   },
-  producto_id: {
-    type: DataTypes.UUID,
+  productId: {
+    type: DataTypes.INTEGER,
     references: {
       model: Product,
-      key: "UniqueID",
+      key: "id",
     },
   },
 });

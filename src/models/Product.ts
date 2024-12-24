@@ -3,28 +3,28 @@ import sequelize from "../config/database";
 import ProductType from "./ProductType";
 
 const Product = sequelize.define("Product", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  detalle: {
+  detail: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  nombre: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  precio: {
+  price: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  tipoProducto_id: {
-    type: DataTypes.UUID,
+  productTypeId: {
+    type: DataTypes.INTEGER,
     references: {
       model: ProductType,
-      key: "UniqueID",
+      key: "id",
     },
   },
 });

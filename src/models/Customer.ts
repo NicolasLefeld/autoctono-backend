@@ -2,29 +2,24 @@ import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
 const Customer = sequelize.define("Customer", {
-  UniqueID: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
   },
-  razonSocial: {
+  companyName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  nombre: {
+  firstName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  apellido: {
+  lastName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  cuit: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
