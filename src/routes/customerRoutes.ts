@@ -1,17 +1,15 @@
 import { Router } from "express";
 import {
-  getAllCustomers,
-  getCustomerById,
   createCustomer,
+  getCustomer,
   updateCustomer,
   deleteCustomer,
 } from "../controllers/customerController";
 
 const router = Router();
 
-router.get("/", getAllCustomers);
-router.get("/:id", getCustomerById);
 router.post("/", createCustomer);
+router.get("/:id", getCustomer);
 router.put("/:id", updateCustomer);
 router.delete("/:id", deleteCustomer);
 

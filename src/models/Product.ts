@@ -1,36 +1,32 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
+import ProductType from "./ProductType";
 
-class Product extends Model {}
-
-Product.init(
-  {
-    UniqueID: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    detalle: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    nombre: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    precio: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    tipoProducto_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+const Product = sequelize.define("Product", {
+  UniqueID: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  detalle: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  precio: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  tipoProducto_id: {
+    type: DataTypes.UUID,
+    references: {
+      model: ProductType,
+      key: "UniqueID",
     },
   },
-  {
-    sequelize,
-    modelName: "Product",
-  }
-);
+});
 
 export default Product;

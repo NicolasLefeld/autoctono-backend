@@ -1,15 +1,11 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
-const Customer = sequelize.define("Customer", {
+const User = sequelize.define("User", {
   UniqueID: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-  },
-  razonSocial: {
-    type: DataTypes.STRING,
-    allowNull: false,
   },
   nombre: {
     type: DataTypes.STRING,
@@ -19,16 +15,10 @@ const Customer = sequelize.define("Customer", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
+  contraseña: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
-  },
-  cuit: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
   },
 });
 
-export default Customer;
+export default User;

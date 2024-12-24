@@ -1,32 +1,28 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
+import Product from "./Product";
 
-class Stock extends Model {}
-
-Stock.init(
-  {
-    UniqueID: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    quantity: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    product_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    unitMeasure_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+const Stock = sequelize.define("Stock", {
+  UniqueID: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  cantidad: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0,
+      max: 25000,
     },
   },
-  {
-    sequelize,
-    modelName: "Stock",
-  }
-);
+  producto_id: {
+    type: DataTypes.UUID,
+    references: {
+      model: Product,
+      key: "UniqueID",
+    },
+  },
+});
 
 export default Stock;

@@ -1,34 +1,25 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
-const Customer = sequelize.define("Customer", {
+const ProductType = sequelize.define("ProductType", {
   UniqueID: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  razonSocial: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   nombre: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  apellido: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
+  codigo: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  cuit: {
+  descripcion: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
+    allowNull: true,
   },
 });
 
-export default Customer;
+export default ProductType;

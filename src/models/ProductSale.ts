@@ -1,36 +1,32 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
-import Customer from "./Customer";
-import SaleStatus from "./SaleStatus";
+import Product from "./Product";
+import Sale from "./Sale";
 
-const Sale = sequelize.define("Sale", {
+const ProductSale = sequelize.define("ProductSale", {
   UniqueID: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  detalle: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  total: {
+  precioUnitario: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  cliente_id: {
+  producto_id: {
     type: DataTypes.UUID,
     references: {
-      model: Customer,
+      model: Product,
       key: "UniqueID",
     },
   },
-  estado_id: {
+  venta_id: {
     type: DataTypes.UUID,
     references: {
-      model: SaleStatus,
+      model: Sale,
       key: "UniqueID",
     },
   },
 });
 
-export default Sale;
+export default ProductSale;
