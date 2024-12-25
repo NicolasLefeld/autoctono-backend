@@ -5,29 +5,23 @@ import stockRoutes from "./routes/stockRoutes";
 import saleRoutes from "./routes/saleRoutes";
 import productRoutes from "./routes/productRoutes";
 import productTypeRoutes from "./routes/productTypeRoutes";
-import productSaleRoutes from "./routes/productSaleRoutes";
 import customerRoutes from "./routes/customerRoutes";
 import authRoutes from "./routes/authRoutes"; // Import auth routes
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Use individual routers
 app.use("/api/stocks", stockRoutes);
 app.use("/api/sales", saleRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/product-types", productTypeRoutes);
-app.use("/api/product-sales", productSaleRoutes);
 app.use("/api/customers", customerRoutes);
-app.use("/api/auth", authRoutes); // Use auth routes
+app.use("/api/auth", authRoutes);
 
-// Sync database and start server
 sequelize
   .sync()
   .then(() => {

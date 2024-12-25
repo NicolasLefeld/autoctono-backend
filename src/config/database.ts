@@ -13,4 +13,8 @@ const sequelize = new Sequelize(
   }
 );
 
+console.log(
+  `\n ${process.env.DB_NAME}\n ${process.env.DB_USER}\n ${process.env.DB_PASSWORD}\n ${process.env.DB_HOST}\n ${process.env.DB_DIALECT}\n\n`
+);
+
 export default sequelize;
