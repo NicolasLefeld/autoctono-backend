@@ -34,7 +34,7 @@ export const getAllStocks = async (req: Request, res: Response) => {
 export const updateStock = async (req: Request, res: Response) => {
   try {
     const [updated] = await Stock.update(req.body, {
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!updated) {
       res.status(404).send();
@@ -48,7 +48,7 @@ export const updateStock = async (req: Request, res: Response) => {
 
 export const deleteStock = async (req: Request, res: Response) => {
   try {
-    const deleted = await Stock.destroy({ where: { UniqueID: req.params.id } });
+    const deleted = await Stock.destroy({ where: { id: req.params.id } });
     if (!deleted) {
       res.status(404).send();
     }

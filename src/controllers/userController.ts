@@ -34,7 +34,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const [updated] = await User.update(req.body, {
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!updated) {
       res.status(404).send();
@@ -48,7 +48,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {
-    const deleted = await User.destroy({ where: { UniqueID: req.params.id } });
+    const deleted = await User.destroy({ where: { id: req.params.id } });
     if (!deleted) {
       res.status(404).send();
     }

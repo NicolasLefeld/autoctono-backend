@@ -72,7 +72,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cantidad\": 100,\n  \"producto_id\": \"UUID\"\n}",
+              "raw": "{\n  \"quantity\": 100,\n  \"productId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -95,7 +95,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"cantidad\": 150,\n  \"producto_id\": \"UUID\"\n}",
+              "raw": "{\n  \"quantity\": 150,\n  \"productId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -165,7 +165,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detalle\": \"Venta de productos\",\n  \"total\": 200.50,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
+              "raw": "{\n  \"detail\": \"Product sale\",\n  \"total\": 200.50,\n  \"customerId\": 1,\n  \"statusId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -188,7 +188,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detalle\": \"Venta actualizada\",\n  \"total\": 250.75,\n  \"cliente_id\": \"UUID\",\n  \"estado_id\": \"UUID\"\n}",
+              "raw": "{\n  \"detail\": \"Updated sale\",\n  \"total\": 250.75,\n  \"customerId\": 1,\n  \"statusId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -258,7 +258,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detalle\": \"Producto nuevo\",\n  \"nombre\": \"Producto A\",\n  \"precio\": 50.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
+              "raw": "{\n  \"detail\": \"New product\",\n  \"name\": \"Product A\",\n  \"price\": 50.00,\n  \"productTypeId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -281,7 +281,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detalle\": \"Producto actualizado\",\n  \"nombre\": \"Producto B\",\n  \"precio\": 60.00,\n  \"tipoProducto_id\": \"UUID\"\n}",
+              "raw": "{\n  \"detail\": \"Updated product\",\n  \"name\": \"Product B\",\n  \"price\": 60.00,\n  \"productTypeId\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -351,7 +351,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Tipo A\",\n  \"codigo\": \"A001\",\n  \"descripcion\": \"Descripción del tipo A\"\n}",
+              "raw": "{\n  \"name\": \"Type A\",\n  \"code\": \"A001\",\n  \"description\": \"Description of type A\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -374,7 +374,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Tipo B\",\n  \"codigo\": \"B001\",\n  \"descripcion\": \"Descripción del tipo B\"\n}",
+              "raw": "{\n  \"name\": \"Type B\",\n  \"code\": \"B001\",\n  \"description\": \"Description of type B\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -388,99 +388,6 @@
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/product-types/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Product Sales",
-      "item": [
-        {
-          "name": "Get All Product Sales",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/product-sales",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Product Sale By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/product-sales/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Product Sale",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/product-sales",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"precioUnitario\": 30.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Product Sale",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/product-sales/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"precioUnitario\": 35.00,\n  \"producto_id\": \"UUID\",\n  \"venta_id\": \"UUID\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Product Sale",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/product-sales/:id",
             "header": [
               {
                 "key": "Authorization",
@@ -537,7 +444,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"razonSocial\": \"Empresa XYZ\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"email\": \"juan.perez@example.com\",\n  \"cuit\": \"20-12345678-9\"\n}",
+              "raw": "{\n  \"companyName\": \"XYZ Company\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -560,7 +467,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"razonSocial\": \"Empresa ABC\",\n  \"nombre\": \"Carlos\",\n  \"apellido\": \"Gomez\",\n  \"email\": \"carlos.gomez@example.com\",\n  \"cuit\": \"20-87654321-0\"\n}",
+              "raw": "{\n  \"companyName\": \"ABC Company\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

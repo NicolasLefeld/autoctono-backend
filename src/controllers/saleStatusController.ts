@@ -34,7 +34,7 @@ export const getAllSaleStatuses = async (req: Request, res: Response) => {
 export const updateSaleStatus = async (req: Request, res: Response) => {
   try {
     const [updated] = await SaleStatus.update(req.body, {
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!updated) {
       res.status(404).send();
@@ -49,7 +49,7 @@ export const updateSaleStatus = async (req: Request, res: Response) => {
 export const deleteSaleStatus = async (req: Request, res: Response) => {
   try {
     const deleted = await SaleStatus.destroy({
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!deleted) {
       res.status(404).send();

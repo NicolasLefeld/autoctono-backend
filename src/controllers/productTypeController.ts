@@ -34,7 +34,7 @@ export const getAllProductTypes = async (req: Request, res: Response) => {
 export const updateProductType = async (req: Request, res: Response) => {
   try {
     const [updated] = await ProductType.update(req.body, {
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!updated) {
       res.status(404).send();
@@ -49,7 +49,7 @@ export const updateProductType = async (req: Request, res: Response) => {
 export const deleteProductType = async (req: Request, res: Response) => {
   try {
     const deleted = await ProductType.destroy({
-      where: { UniqueID: req.params.id },
+      where: { id: req.params.id },
     });
     if (!deleted) {
       res.status(404).send();
