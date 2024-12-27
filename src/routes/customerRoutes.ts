@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   createCustomer,
   getCustomer,
-  getAllCustomers,
+  getAllCustomers, 
   updateCustomer,
   deleteCustomer,
 } from "../controllers/customerController";

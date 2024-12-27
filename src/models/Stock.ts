@@ -1,8 +1,20 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/database";
 import Product from "./Product";
 
-const Stock = sequelize.define("Stock", {
+interface StockAttributes {
+  id: number;
+  quantity: number;
+  productId: number;
+}
+
+interface StockCreationAttributes extends Optional<StockAttributes, "id"> {}
+
+export interface StockInstance
+  extends Model<StockAttributes, StockCreationAttributes>,
+    StockAttributes {}
+
+const Stock = sequelize.define<StockInstance>("Stock", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

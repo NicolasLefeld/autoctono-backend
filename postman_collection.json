@@ -165,7 +165,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"detail\": \"Product sale\",\n  \"total\": 200.50,\n  \"customerId\": 1,\n  \"statusId\": 1\n}",
+              "raw": "{\n  \"detail\": \"Product sale\",\n  \"total\": 200.50,\n  \"customerId\": 1,\n  \"statusId\": 1,\n  \"products\": [\n    { \"productId\": 1, \"unitPrice\": 50.00, \"quantity\": 2 },\n    { \"productId\": 2, \"unitPrice\": 30.00, \"quantity\": 1 }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"

@@ -7,6 +7,9 @@ import productRoutes from "./routes/productRoutes";
 import productTypeRoutes from "./routes/productTypeRoutes";
 import customerRoutes from "./routes/customerRoutes";
 import authRoutes from "./routes/authRoutes"; // Import auth routes
+import Customer from "./models/Customer";
+import Sale from "./models/Sale";
+import ProductSale from "./models/ProductSale";
 
 dotenv.config();
 
@@ -21,6 +24,10 @@ app.use("/api/products", productRoutes);
 app.use("/api/product-types", productTypeRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/auth", authRoutes);
+
+Customer.associate();
+Sale.associate();
+ProductSale.associate();
 
 sequelize
   .sync()

@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import Customer from "../models/Customer";
+import Sale from "../models/Sale";
+import SaleStatus from "../models/SaleStatus";
+import { SaleStatusEnum } from "../models/SaleStatus";
 
 export const createCustomer = async (req: Request, res: Response) => {
   try {
@@ -12,11 +15,36 @@ export const createCustomer = async (req: Request, res: Response) => {
 
 export const getCustomer = async (req: Request, res: Response) => {
   try {
-    const customer = await Customer.findByPk(req.params.id);
+    const customer = await Customer.findByPk(req.params.id, {
+      include: [
+        {
+          model: Sale,
+          as: "sales",
+          include: [
+            {
+              model: SaleStatus,
+              as: "status",
+              where: {
+                code: [SaleStatusEnum.PENDING, SaleStatusEnum.IN_PROCESS],
+              },
+              required: true,
+            },
+          ],
+          required: false,
+        },
+      ],
+    });
+
     if (!customer) {
       res.status(404).send();
+      return;
     }
-    res.send(customer);
+
+    const currentAccount = customer.get("sales");
+
+    console.log(`\n\n${currentAccount}\n\n`);
+
+    res.send({ ...customer.toJSON(), currentAccount });
   } catch (error) {
     res.status(500).send(error);
   }

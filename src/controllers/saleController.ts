@@ -1,11 +1,56 @@
 import { Request, Response } from "express";
 import Sale from "../models/Sale";
+import ProductSale from "../models/ProductSale";
+import Stock, { StockInstance } from "../models/Stock";
+import sequelize from "../config/database";
+import { SaleInstance } from "../models/Sale";
 
 export const createSale = async (req: Request, res: Response) => {
+  const { detail, total, customerId, statusId, products } = req.body;
+
+  const transaction = await sequelize.transaction();
+
   try {
-    const sale = await Sale.create(req.body);
+    const sale: SaleInstance = await Sale.create(
+      { detail, total, customerId, statusId },
+      { transaction }
+    );
+
+    for (const product of products) {
+      const { productId, unitPrice, quantity } = product;
+
+      await ProductSale.create(
+        {
+          unitPrice: 1.0,
+          quantity: 1,
+          productId: 1,
+          saleId: sale.id,
+        },
+        { transaction }
+      );
+
+      const stock: StockInstance | null = await Stock.findOne({
+        where: { productId },
+        transaction,
+      });
+
+      if (!stock || stock.quantity < quantity) {
+        await transaction.rollback();
+        res.status(400).json({ message: "Insufficient stock" });
+
+        return;
+      }
+
+      await stock.update(
+        { quantity: stock.quantity - quantity },
+        { transaction }
+      );
+    }
+
+    await transaction.commit();
     res.status(201).send(sale);
   } catch (error) {
+    await transaction.rollback();
     res.status(400).send(error);
   }
 };
