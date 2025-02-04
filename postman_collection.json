@@ -235,6 +235,31 @@
                     "response": []
                 },
                 {
+                    "name": "Get Sale By ID DTO",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwtToken}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/sales/dto/:id",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["sales", "dto", ":id"],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "9"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
                     "name": "Create Sale",
                     "request": {
                         "method": "POST",
@@ -313,31 +338,6 @@
                             "variable": [
                                 {
                                     "key": "id"
-                                }
-                            ]
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Get Sale By ID DTO",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{jwtToken}}",
-                                "type": "text"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/sales/dto/:id",
-                            "host": ["{{baseUrl}}"],
-                            "path": ["sales", "dto", ":id"],
-                            "variable": [
-                                {
-                                    "key": "id",
-                                    "value": "9"
                                 }
                             ]
                         }
@@ -521,7 +521,8 @@
                             "path": ["products", ":id"],
                             "variable": [
                                 {
-                                    "key": "id"
+                                    "key": "id",
+                                    "value": "2"
                                 }
                             ]
                         }
@@ -654,7 +655,8 @@
                             "path": ["product-types", ":id"],
                             "variable": [
                                 {
-                                    "key": "id"
+                                    "key": "id",
+                                    "value": "1"
                                 }
                             ]
                         }
@@ -882,13 +884,57 @@
             ]
         }
     ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{jwtToken}}",
+                "type": "string"
+            }
+        ]
+    },
     "event": [
         {
             "listen": "prerequest",
             "script": {
                 "type": "text/javascript",
                 "packages": {},
-                "exec": [""]
+                "exec": [
+                    "const authToken = pm.collectionVariables.get(\"jwtToken\");",
+                    "const authUrl = `${pm.collectionVariables.get(\"baseUrl\")}/${pm.collectionVariables.get(\"authUrl\")}`",
+                    "const username = \"germanpellizer\";",
+                    "const password = \"germanpellizer\";",
+                    "",
+                    "pm.sendRequest({",
+                    "    url: authUrl,",
+                    "    method: \"POST\",",
+                    "    header: {",
+                    "        \"Content-Type\": \"application/json\"",
+                    "    },",
+                    "    body: {",
+                    "        mode: \"raw\",",
+                    "        raw: JSON.stringify({",
+                    "            username: username,",
+                    "            password: password",
+                    "        })",
+                    "    }",
+                    "}, function (err, res) {",
+                    "    if (err) {",
+                    "        console.log(\"Error obteniendo el token:\", err);",
+                    "    } else {",
+                    "",
+                    "        try {",
+                    "            const jsonResponse = res.json();",
+                    "",
+                    "            pm.collectionVariables.set(\"jwtToken\", jsonResponse.token);",
+                    "        } catch (e) {",
+                    "            console.log(\"Error al parsear JSON:\", e);",
+                    "        }",
+                    "    }",
+                    "});",
+                    ""
+                ]
             }
         },
         {
@@ -908,6 +954,11 @@
         {
             "key": "jwtToken",
             "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzM4NDUzODE3LCJleHAiOjE3Mzg0NTc0MTd9.oZTK0rJJDxVdst1KY_FS9HtraXX4W5rIcs7cOzFOnxQ"
+        },
+        {
+            "key": "authUrl",
+            "value": "",
+            "type": "string"
         }
     ]
 }
