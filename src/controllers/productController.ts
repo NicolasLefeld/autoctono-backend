@@ -15,7 +15,7 @@ export const getProduct = async (req: Request, res: Response) => {
     try {
         const product = await Product.findOne({
             where: { id: req.params.id },
-            // include: [{ model: ProductType, as: "productType" }],
+            include: [{ model: ProductType, as: "productType" }],
         });
         if (!product) {
             res.status(404).send();
