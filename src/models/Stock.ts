@@ -1,40 +1,48 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 import Product from "./Product";
 
-interface StockAttributes {
-  id: number;
-  quantity: number;
-  productId: number;
+class Stock extends Model {
+    public id!: number;
+    public quantity!: number;
+    public productId!: number;
+
+    public static associate() {
+        Stock.belongsTo(Product, {
+            as: "product",
+            foreignKey: "productId",
+        });
+    }
 }
 
-interface StockCreationAttributes extends Optional<StockAttributes, "id"> {}
-
-export interface StockInstance
-  extends Model<StockAttributes, StockCreationAttributes>,
-    StockAttributes {}
-
-const Stock = sequelize.define<StockInstance>("Stock", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    validate: {
-      min: 0,
-      max: 100000, // 100000gr = 100kg
+Stock.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                min: 0,
+                max: 100000, // 100000gr = 100kg
+            },
+        },
+        productId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: Product,
+                key: "id",
+            },
+        },
     },
-  },
-  productId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Product,
-      key: "id",
-    },
-  },
-});
+    {
+        sequelize,
+        modelName: "Stock",
+        timestamps: true,
+    }
+);
 
 export default Stock;
