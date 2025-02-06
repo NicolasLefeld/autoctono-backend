@@ -4,8 +4,17 @@ import Product from "../models/Product";
 
 export const createStock = async (req: Request, res: Response) => {
     try {
+        const { productId } = req.body;
+        if (!productId) {
+            res.status(400).send("Product id is required");
+        }
+
         const stock = await Stock.create(req.body);
-        res.status(201).send(stock);
+        const getCreatedStock = await Stock.findOne({
+            where: { id: stock.id },
+            include: [{ model: Product, as: "product" }],
+        });
+        res.status(201).send(getCreatedStock);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -13,7 +22,16 @@ export const createStock = async (req: Request, res: Response) => {
 
 export const getStock = async (req: Request, res: Response) => {
     try {
-        const stock = await Stock.findByPk(req.params.id);
+        const id = req.params.id;
+        if (!id) {
+            res.status(400).send("Stock id is required");
+        }
+
+        const stock = await Stock.findOne({
+            where: { id },
+            include: [{ model: Product, as: "product" }],
+        });
+
         if (!stock) {
             res.status(404).send();
         }
