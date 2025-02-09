@@ -1,19 +1,20 @@
 import { Router } from "express";
 import {
-  createProduct,
-  getProduct,
-  getAllProducts,
-  updateProduct,
-  deleteProduct,
+    createProduct,
+    getProduct,
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
 } from "../controllers/productController";
 import { authenticateJWT } from "../middleware/authMiddleware";
 
 const router = Router();
+router.use(authenticateJWT);
 
-router.post("/", authenticateJWT, createProduct);
-router.get("/", authenticateJWT, getAllProducts);
-router.get("/:id", authenticateJWT, getProduct);
-router.put("/:id", authenticateJWT, updateProduct);
-router.delete("/:id", authenticateJWT, deleteProduct);
+router.post("/", createProduct);
+router.get("/", getAllProducts);
+router.get("/:id", getProduct);
+router.put("/:id", updateProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;
