@@ -36,6 +36,10 @@ Product.init(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
+        cost: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
         productTypeId: {
             type: DataTypes.INTEGER,
             references: {

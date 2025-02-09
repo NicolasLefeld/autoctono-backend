@@ -34,7 +34,7 @@ app.use("/api/auth", authRoutes);
 initModels();
 
 sequelize
-    .sync()
+    .sync({ alter: true })
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
