@@ -53,11 +53,17 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
     try {
+        const id = req.params.id;
+
+        if (!id) {
+            res.status(400).send({ message: "Product id is required" });
+        }
+
         const [updated] = await Product.update(req.body, {
-            where: { id: req.params.id },
+            where: { id },
         });
         if (!updated) {
-            res.status(404).send();
+            res.status(404).send("Product not found");
         }
         const updatedProduct = await Product.findByPk(req.params.id);
         res.send(updatedProduct);
