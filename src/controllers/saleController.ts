@@ -4,6 +4,8 @@ import Product from "../models/Product";
 import ProductSale from "../models/ProductSale";
 import Sale, { SaleInstance } from "../models/Sale";
 import Stock from "../models/Stock";
+import Customer from "../models/Customer";
+import SaleStatus from "../models/SaleStatus";
 
 export const createSale = async (req: Request, res: Response) => {
     const { detail, total, customerId, statusId, products } = req.body;
@@ -48,9 +50,32 @@ export const createSale = async (req: Request, res: Response) => {
         }
 
         await transaction.commit();
-        res.status(201).send(sale);
+
+        const saleWithDetails = await Sale.findByPk(sale.id, {
+            include: [
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
+            ],
+        });
+
+        res.status(201).json(saleWithDetails);
     } catch (error) {
-        await transaction.rollback();
+        try {
+            await transaction.rollback();
+        } catch (rollbackError) {
+            // Posiblemente la transacción ya se cerró; podríamos ignorar o loguear
+            console.error("Error rolling back transaction", rollbackError);
+        }
         res.status(400).send(error);
     }
 };
@@ -69,17 +94,28 @@ export const getSale = async (req: Request, res: Response) => {
 
 export const getSaleDTO = async (req: Request, res: Response) => {
     try {
-        const getProductSale = await ProductSale.findOne({
-            where: { saleId: req.params.id },
+        let id = req.params.id;
+
+        const saleWithDetails = await Sale.findByPk(id, {
             include: [
-                { model: Sale, as: "sale" },
-                { model: Product, as: "product" },
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
             ],
         });
-        if (!getProductSale) {
+        if (!saleWithDetails) {
             res.status(404).send();
         }
-        res.send(getProductSale);
+        res.send(saleWithDetails);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -96,14 +132,26 @@ export const getAllSales = async (req: Request, res: Response) => {
 
 export const getAllSalesDTO = async (req: Request, res: Response) => {
     try {
-        const productSales = await ProductSale.findAll({
+        const saleWithDetails = await Sale.findAll({
             include: [
-                { model: Sale, as: "sale" },
-                { model: Product, as: "product" },
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
             ],
         });
-
-        res.send(productSales);
+        if (!saleWithDetails) {
+            res.status(404).send();
+        }
+        res.send(saleWithDetails);
     } catch (error) {
         res.status(500).send(error);
     }
