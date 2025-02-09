@@ -6,8 +6,20 @@ import ProductSale from "../models/ProductSale";
 
 export const createProduct = async (req: Request, res: Response) => {
     try {
+        const { name, price, productTypeId } = req.body;
+
+        if (!name || !price || !productTypeId) {
+            res.status(400).send({
+                message: "Name, price and productTypeId are required",
+            });
+        }
+
         const product = await Product.create(req.body);
-        res.status(201).send(product);
+
+        const getNewProduct = await Product.findByPk(product.id, {
+            include: [{ model: ProductType, as: "productType" }],
+        });
+        res.status(201).send(getNewProduct);
     } catch (error) {
         res.status(400).send(error);
     }
