@@ -4,6 +4,7 @@ import ProductSale from "../models/ProductSale";
 import Stock, { StockInstance } from "../models/Stock";
 import sequelize from "../config/database";
 import { SaleInstance } from "../models/Sale";
+import Product from "../models/Product";
 
 export const createSale = async (req: Request, res: Response) => {
     const { detail, total, customerId, statusId, products } = req.body;
@@ -67,10 +68,43 @@ export const getSale = async (req: Request, res: Response) => {
     }
 };
 
+export const getSaleDTO = async (req: Request, res: Response) => {
+    try {
+        const getProductSale = await ProductSale.findOne({
+            where: { saleId: req.params.id },
+            include: [
+                { model: Sale, as: "sale" },
+                { model: Product, as: "product" },
+            ],
+        });
+        if (!getProductSale) {
+            res.status(404).send();
+        }
+        res.send(getProductSale);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 export const getAllSales = async (req: Request, res: Response) => {
     try {
         const sales = await Sale.findAll();
         res.send(sales);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+export const getAllSalesDTO = async (req: Request, res: Response) => {
+    try {
+        const productSales = await ProductSale.findAll({
+            include: [
+                { model: Sale, as: "sale" },
+                { model: Product, as: "product" },
+            ],
+        });
+
+        res.send(productSales);
     } catch (error) {
         res.status(500).send(error);
     }

@@ -191,6 +191,25 @@
                     "response": []
                 },
                 {
+                    "name": "Get All Sales DTO",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwtToken}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/sales/dto",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["sales", "dto"]
+                        }
+                    },
+                    "response": []
+                },
+                {
                     "name": "Get Sale By ID",
                     "request": {
                         "method": "GET",
@@ -294,6 +313,31 @@
                             "variable": [
                                 {
                                     "key": "id"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Sale By ID DTO",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{jwtToken}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/sales/dto/:id",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["sales", "dto", ":id"],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "9"
                                 }
                             ]
                         }
