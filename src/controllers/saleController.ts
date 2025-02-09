@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import Sale from "../models/Sale";
-import ProductSale from "../models/ProductSale";
-import Stock, { StockInstance } from "../models/Stock";
 import sequelize from "../config/database";
-import { SaleInstance } from "../models/Sale";
 import Product from "../models/Product";
+import ProductSale from "../models/ProductSale";
+import Sale, { SaleInstance } from "../models/Sale";
+import Stock from "../models/Stock";
 
 export const createSale = async (req: Request, res: Response) => {
     const { detail, total, customerId, statusId, products } = req.body;
@@ -30,7 +29,7 @@ export const createSale = async (req: Request, res: Response) => {
                 { transaction }
             );
 
-            const stock: StockInstance | null = await Stock.findOne({
+            const stock = await Stock.findOne({
                 where: { productId },
                 transaction,
             });
@@ -127,9 +126,15 @@ export const updateSale = async (req: Request, res: Response) => {
 
 export const deleteSale = async (req: Request, res: Response) => {
     try {
-        const deleted = await Sale.destroy({ where: { id: req.params.id } });
-        if (!deleted) {
-            res.status(404).send();
+        const id = req.params.id;
+
+        const deleteProductSale = await ProductSale.destroy({
+            where: { saleId: id },
+        });
+
+        const deleteSale = await Sale.destroy({ where: { id } });
+        if (!deleteSale) {
+            res.status(404).send("Sale not found");
         }
         res.send({ message: "Sale deleted" });
     } catch (error) {

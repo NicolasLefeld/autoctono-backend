@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Product from "../models/Product";
 import ProductType from "../models/ProductType";
+import Stock from "../models/Stock";
+import ProductSale from "../models/ProductSale";
 
 export const createProduct = async (req: Request, res: Response) => {
     try {
@@ -54,11 +56,22 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
     try {
-        const deleted = await Product.destroy({
-            where: { id: req.params.id },
+        const id = req.params.id;
+        if (!id) {
+            res.status(400).send({ message: "Product id is required" });
+        }
+
+        const deleteStock = await Stock.destroy({ where: { productId: id } });
+
+        const deleteProductSale = await ProductSale.destroy({
+            where: { productId: id },
         });
-        if (!deleted) {
-            res.status(404).send();
+
+        const deleteProduct = await Product.destroy({
+            where: { id },
+        });
+        if (!deleteProduct) {
+            res.status(404).send("Product not found");
         }
         res.send({ message: "Product deleted" });
     } catch (error) {
