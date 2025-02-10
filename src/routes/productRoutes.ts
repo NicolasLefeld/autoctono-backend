@@ -10,6 +10,7 @@ import {
 import { authenticateJWT } from "../middleware/authMiddleware";
 
 const router = Router();
+router.use(authenticateJWT);
 
 router.post("/", authenticateJWT, createProduct);
 router.get("/", authenticateJWT, getAllProducts);

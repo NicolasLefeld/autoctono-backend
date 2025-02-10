@@ -1,15 +1,17 @@
-import express from "express";
 import dotenv from "dotenv";
-import sequelize from "../src/config/database"; // Ensure this path is correct
-import stockRoutes from "./routes/stockRoutes";
-import saleRoutes from "./routes/saleRoutes";
-import productRoutes from "./routes/productRoutes";
-import productTypeRoutes from "./routes/productTypeRoutes";
+import express from "express";
+import sequelize from "../src/config/database";
+import { initModels } from "./models";
+import authRoutes from "./routes/authRoutes";
 import customerRoutes from "./routes/customerRoutes";
-import authRoutes from "./routes/authRoutes"; // Import auth routes
-import Customer from "./models/Customer";
-import Sale from "./models/Sale";
-import ProductSale from "./models/ProductSale";
+import productRoutes from "./routes/productRoutes";
+import productSaleRoutes from "./routes/productSaleRoutes";
+import productTypeRoutes from "./routes/productTypeRoutes";
+import saleRoutes from "./routes/saleRoutes";
+import saleStatusRoutes from "./routes/saleStatusRoutes";
+import stockRoutes from "./routes/stockRoutes";
+import cors from "cors";
+import loggerMiddleware from "./middleware/loggerMiddleware";
 
 dotenv.config();
 
@@ -17,25 +19,27 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(loggerMiddleware);
+app.use(cors());
 
 app.use("/api/stocks", stockRoutes);
+app.use("/api/sales-status", saleStatusRoutes);
 app.use("/api/sales", saleRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/product-sale", productSaleRoutes);
 app.use("/api/product-types", productTypeRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/auth", authRoutes);
 
-Customer.associate();
-Sale.associate();
-ProductSale.associate();
+initModels();
 
 sequelize
-  .sync()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    .sync({ alter: true })
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Unable to connect to the database:", err);
     });
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });

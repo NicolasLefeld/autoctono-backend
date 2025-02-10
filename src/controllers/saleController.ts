@@ -1,104 +1,191 @@
 import { Request, Response } from "express";
-import Sale from "../models/Sale";
-import ProductSale from "../models/ProductSale";
-import Stock, { StockInstance } from "../models/Stock";
 import sequelize from "../config/database";
-import { SaleInstance } from "../models/Sale";
+import Product from "../models/Product";
+import ProductSale from "../models/ProductSale";
+import Sale, { SaleInstance } from "../models/Sale";
+import Stock from "../models/Stock";
+import Customer from "../models/Customer";
+import SaleStatus from "../models/SaleStatus";
 
 export const createSale = async (req: Request, res: Response) => {
-  const { detail, total, customerId, statusId, products } = req.body;
+    const { detail, total, customerId, statusId, products } = req.body;
 
-  const transaction = await sequelize.transaction();
+    const transaction = await sequelize.transaction();
 
-  try {
-    const sale: SaleInstance = await Sale.create(
-      { detail, total, customerId, statusId },
-      { transaction }
-    );
+    try {
+        const sale: SaleInstance = await Sale.create(
+            { detail, total, customerId, statusId },
+            { transaction }
+        );
 
-    for (const product of products) {
-      const { productId, unitPrice, quantity } = product;
+        for (const product of products) {
+            const { productId, unitPrice, quantity } = product;
 
-      await ProductSale.create(
-        {
-          unitPrice: 1.0,
-          quantity: 1,
-          productId: 1,
-          saleId: sale.id,
-        },
-        { transaction }
-      );
+            await ProductSale.create(
+                {
+                    unitPrice: unitPrice,
+                    quantity: quantity,
+                    productId: productId,
+                    saleId: sale.id,
+                },
+                { transaction }
+            );
 
-      const stock: StockInstance | null = await Stock.findOne({
-        where: { productId },
-        transaction,
-      });
+            const stock = await Stock.findOne({
+                where: { productId },
+                transaction,
+            });
 
-      if (!stock || stock.quantity < quantity) {
-        await transaction.rollback();
-        res.status(400).json({ message: "Insufficient stock" });
+            if (!stock || stock.quantity < quantity) {
+                await transaction.rollback();
+                res.status(400).json({ message: "Insufficient stock" });
 
-        return;
-      }
+                return;
+            }
 
-      await stock.update(
-        { quantity: stock.quantity - quantity },
-        { transaction }
-      );
+            await stock.update(
+                { quantity: stock.quantity - quantity },
+                { transaction }
+            );
+        }
+
+        await transaction.commit();
+
+        const saleWithDetails = await Sale.findByPk(sale.id, {
+            include: [
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
+            ],
+        });
+
+        res.status(201).json(saleWithDetails);
+    } catch (error) {
+        try {
+            await transaction.rollback();
+        } catch (rollbackError) {
+            // Posiblemente la transacción ya se cerró; podríamos ignorar o loguear
+            console.error("Error rolling back transaction", rollbackError);
+        }
+        res.status(400).send(error);
     }
-
-    await transaction.commit();
-    res.status(201).send(sale);
-  } catch (error) {
-    await transaction.rollback();
-    res.status(400).send(error);
-  }
 };
 
 export const getSale = async (req: Request, res: Response) => {
-  try {
-    const sale = await Sale.findByPk(req.params.id);
-    if (!sale) {
-      res.status(404).send();
+    try {
+        const sale = await Sale.findByPk(req.params.id);
+        if (!sale) {
+            res.status(404).send();
+        }
+        res.send(sale);
+    } catch (error) {
+        res.status(500).send(error);
     }
-    res.send(sale);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+};
+
+export const getSaleDTO = async (req: Request, res: Response) => {
+    try {
+        let id = req.params.id;
+
+        const saleWithDetails = await Sale.findByPk(id, {
+            include: [
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
+            ],
+        });
+        if (!saleWithDetails) {
+            res.status(404).send();
+        }
+        res.send(saleWithDetails);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 export const getAllSales = async (req: Request, res: Response) => {
-  try {
-    const sales = await Sale.findAll();
-    res.send(sales);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+    try {
+        const sales = await Sale.findAll();
+        res.send(sales);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+export const getAllSalesDTO = async (req: Request, res: Response) => {
+    try {
+        const saleWithDetails = await Sale.findAll({
+            include: [
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [
+                        {
+                            model: Product,
+                            as: "product",
+                        },
+                    ],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
+            ],
+        });
+        if (!saleWithDetails) {
+            res.status(404).send();
+        }
+        res.send(saleWithDetails);
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 export const updateSale = async (req: Request, res: Response) => {
-  try {
-    const [updated] = await Sale.update(req.body, {
-      where: { id: req.params.id },
-    });
-    if (!updated) {
-      res.status(404).send();
+    try {
+        const [updated] = await Sale.update(req.body, {
+            where: { id: req.params.id },
+        });
+        if (!updated) {
+            res.status(404).send();
+        }
+        const updatedSale = await Sale.findByPk(req.params.id);
+        res.send(updatedSale);
+    } catch (error) {
+        res.status(400).send(error);
     }
-    const updatedSale = await Sale.findByPk(req.params.id);
-    res.send(updatedSale);
-  } catch (error) {
-    res.status(400).send(error);
-  }
 };
 
 export const deleteSale = async (req: Request, res: Response) => {
-  try {
-    const deleted = await Sale.destroy({ where: { id: req.params.id } });
-    if (!deleted) {
-      res.status(404).send();
+    try {
+        const id = req.params.id;
+
+        const deleteProductSale = await ProductSale.destroy({
+            where: { saleId: id },
+        });
+
+        const deleteSale = await Sale.destroy({ where: { id } });
+        if (!deleteSale) {
+            res.status(404).send("Sale not found");
+        }
+        res.send({ message: "Sale deleted" });
+    } catch (error) {
+        res.status(500).send(error);
     }
-    res.send({ message: "Sale deleted" });
-  } catch (error) {
-    res.status(500).send(error);
-  }
 };
