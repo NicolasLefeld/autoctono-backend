@@ -31,6 +31,28 @@ export const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
+export const updateProductPrices = async (req: Request, res: Response) => {
+  try {
+    const { amountToIncrease, productsId } = req.body;
+
+    for (const productId of productsId) {
+      const productFound = await Product.findByPk(productId);
+
+      if (!productFound) {
+        res.status(404).send();
+        return;
+      }
+
+      await productFound.update({
+        price: productFound.price + productFound.price * amountToIncrease,
+      });
+    }
+
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const [updated] = await Product.update(req.body, {

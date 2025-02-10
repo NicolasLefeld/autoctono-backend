@@ -1,506 +1,867 @@
 {
-  "info": {
-    "name": "Autoctono API",
-    "_postman_id": "12345-67890-abcdef",
-    "description": "Postman collection for Autoctono API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/auth/login",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"your_username\",\n  \"password\": \"your_password\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Stock",
-      "item": [
-        {
-          "name": "Get All Stock",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/stocks",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Stock By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/stocks/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Stock",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/stocks",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"quantity\": 100,\n  \"productId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Stock",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/stocks/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"quantity\": 150,\n  \"productId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Stock",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/stocks/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Sales",
-      "item": [
-        {
-          "name": "Get All Sales",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/sales",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Sale By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/sales/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Sale",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/sales",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"detail\": \"Product sale\",\n  \"total\": 200.50,\n  \"customerId\": 1,\n  \"statusId\": 1,\n  \"products\": [\n    { \"productId\": 1, \"unitPrice\": 50.00, \"quantity\": 2 },\n    { \"productId\": 2, \"unitPrice\": 30.00, \"quantity\": 1 }\n  ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Sale",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/sales/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"detail\": \"Updated sale\",\n  \"total\": 250.75,\n  \"customerId\": 1,\n  \"statusId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Sale",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/sales/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Products",
-      "item": [
-        {
-          "name": "Get All Products",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/products",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Product By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/products/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Product",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/products",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"detail\": \"New product\",\n  \"name\": \"Product A\",\n  \"price\": 50.00,\n  \"productTypeId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Product",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/products/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"detail\": \"Updated product\",\n  \"name\": \"Product B\",\n  \"price\": 60.00,\n  \"productTypeId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Product",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/products/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Product Types",
-      "item": [
-        {
-          "name": "Get All Product Types",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/product-types",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Product Type By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/product-types/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Product Type",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/product-types",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Type A\",\n  \"code\": \"A001\",\n  \"description\": \"Description of type A\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Product Type",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/product-types/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Type B\",\n  \"code\": \"B001\",\n  \"description\": \"Description of type B\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Product Type",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/product-types/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Customers",
-      "item": [
-        {
-          "name": "Get All Customers",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/customers",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Get Customer By ID",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/customers/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Create Customer",
-          "request": {
-            "method": "POST",
-            "url": "{{baseUrl}}/customers",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"companyName\": \"XYZ Company\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Update Customer",
-          "request": {
-            "method": "PUT",
-            "url": "{{baseUrl}}/customers/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"companyName\": \"ABC Company\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "Delete Customer",
-          "request": {
-            "method": "DELETE",
-            "url": "{{baseUrl}}/customers/:id",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{jwtToken}}",
-                "type": "text"
-              }
-            ]
-          }
-        }
-      ]
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000/api"
-    },
-    {
-      "key": "jwtToken",
-      "value": ""
-    }
-  ]
+	"info": {
+		"_postman_id": "b7d1bb3c-b7ef-4182-851d-e0220a95a75b",
+		"name": "Autoctono API",
+		"description": "Postman collection for Autoctono API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9003454"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"germanpellizer\",\n  \"password\": \"germanpellizer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stock",
+			"item": [
+				{
+					"name": "Get All Stock",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stocks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stock By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stocks/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Stock",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 100,\n  \"productId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/stocks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Stock",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quantity\": 150,\n  \"productId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/stocks/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Stock",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stocks/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Get All Sales",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/sales",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sale By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/sales/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sales",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sale",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"detail\": \"Product sale\",\n  \"total\": 200.50,\n  \"customerId\": 1,\n  \"statusId\": 1,\n  \"products\": [\n    { \"productId\": 1, \"unitPrice\": 50.00, \"quantity\": 1 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sales",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sale",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"detail\": \"Updated sale\",\n  \"total\": 250.75,\n  \"customerId\": 1,\n  \"statusId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sales/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sales",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sale",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/sales/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sales",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"detail\": \"New product\",\n  \"name\": \"Product A\",\n  \"price\": 100.00,\n  \"productTypeId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update prices",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amountToIncrease\": 1,\n  \"productsId\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/update-prices",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"update-prices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"detail\": \"Updated product\",\n  \"name\": \"Product B\",\n  \"price\": 60.00,\n  \"productTypeId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Types",
+			"item": [
+				{
+					"name": "Get All Product Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/product-types",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Type By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/product-types/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product-types",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Type A\",\n  \"code\": \"A001\",\n  \"description\": \"Description of type A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product-types",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Type",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Type B\",\n  \"code\": \"B001\",\n  \"description\": \"Description of type B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product-types/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product-types",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Type",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/product-types/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product-types",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/customers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyName\": \"XYZ Company\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyName\": \"ABC Company\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwtToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/customers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api"
+		},
+		{
+			"key": "jwtToken",
+			"value": ""
+		}
+	]
 }
