@@ -52,26 +52,27 @@ export const getAllProducts = async (req: Request, res: Response) => {
 };
 
 export const updateProductPrices = async (req: Request, res: Response) => {
-  try {
-    const { amountToIncrease, productsId } = req.body;
+    try {
+        const { amountToIncrease, productsId } = req.body;
 
-    for (const productId of productsId) {
-      const productFound = await Product.findByPk(productId);
+        for (const productId of productsId) {
+            const productFound = await Product.findByPk(productId);
 
-      if (!productFound) {
-        res.status(404).send();
-        return;
-      }
+            if (!productFound) {
+                res.status(404).send();
+                return;
+            }
 
-      await productFound.update({
-        price: productFound.price + productFound.price * amountToIncrease,
-      });
+            await productFound.update({
+                price:
+                    productFound.price + productFound.price * amountToIncrease,
+            });
+        }
+
+        res.status(200).send();
+    } catch (error) {
+        res.status(400).send(error);
     }
-
-    res.status(200).send();
-  } catch (error) {
-    res.status(400).send(error);
-  }
 };
 export const updateProduct = async (req: Request, res: Response) => {
     try {
@@ -87,7 +88,9 @@ export const updateProduct = async (req: Request, res: Response) => {
         if (!updated) {
             res.status(404).send("Product not found");
         }
-        const updatedProduct = await Product.findByPk(req.params.id);
+        const updatedProduct = await Product.findByPk(id, {
+            include: { model: ProductType, as: "productType" },
+        });
         res.send(updatedProduct);
     } catch (error) {
         res.status(400).send(error);

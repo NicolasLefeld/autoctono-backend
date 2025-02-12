@@ -158,16 +158,84 @@ export const getAllSalesDTO = async (req: Request, res: Response) => {
 };
 
 export const updateSale = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const { detail, total, customerId, statusId, products } = req.body;
+
+    // Iniciamos una transacción
+    const transaction = await sequelize.transaction();
+
     try {
-        const [updated] = await Sale.update(req.body, {
-            where: { id: req.params.id },
-        });
-        if (!updated) {
-            res.status(404).send();
+        // Buscamos la venta a actualizar
+        const sale = await Sale.findByPk(id, { transaction });
+        if (!sale) {
+            try {
+                await transaction.rollback();
+            } catch (rollbackError) {
+                console.error("Error rolling back transaction", rollbackError);
+            }
+            res.status(404).send({ message: "Sale not found" });
         }
-        const updatedSale = await Sale.findByPk(req.params.id);
+
+        // Actualizamos los campos básicos de la venta
+        await sale?.update(
+            { detail, total, customerId, statusId },
+            { transaction }
+        );
+
+        // Eliminamos los registros anteriores de ProductSale asociados a esta venta
+        await ProductSale.destroy({ where: { saleId: id }, transaction });
+
+        // Recorremos el array de productos enviado y creamos nuevos registros en ProductSale
+        for (const product of products) {
+            const { productId, unitPrice, quantity } = product;
+
+            // (Opcional) Puedes verificar stock aquí, tal como en createSale
+            const stock = await Stock.findOne({
+                where: { productId },
+                transaction,
+            });
+            if (!stock || stock.quantity < quantity) {
+                try {
+                    await transaction.rollback();
+                } catch (rollbackError) {
+                    console.error(
+                        "Error rolling back transaction",
+                        rollbackError
+                    );
+                }
+                res.status(400).json({ message: "Insufficient stock" });
+            }
+
+            await ProductSale.create(
+                { productId, unitPrice, quantity, saleId: sale?.id },
+                { transaction }
+            );
+
+            // Actualizamos el stock (opcional, según tu lógica)
+            await stock?.update(
+                { quantity: stock.quantity - quantity },
+                { transaction }
+            );
+        }
+
+        await transaction.commit();
+
+        // Obtenemos la venta actualizada con todos los detalles y asociaciones
+        const updatedSale = await Sale.findByPk(id, {
+            include: [
+                {
+                    model: ProductSale,
+                    as: "productSales",
+                    include: [{ model: Product, as: "product" }],
+                },
+                { model: Customer, as: "customer" },
+                { model: SaleStatus, as: "status" },
+            ],
+        });
+
         res.send(updatedSale);
     } catch (error) {
+        await transaction.rollback();
         res.status(400).send(error);
     }
 };

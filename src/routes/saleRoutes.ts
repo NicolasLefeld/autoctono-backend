@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
     createSale,
-    getSale,
-    getAllSales,
-    updateSale,
     deleteSale,
-    getSaleDTO,
+    getAllSales,
     getAllSalesDTO,
+    getSale,
+    getSaleDTO,
+    updateSale,
 } from "../controllers/saleController";
 import { authenticateJWT } from "../middleware/authMiddleware";
 
