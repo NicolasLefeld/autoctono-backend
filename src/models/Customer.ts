@@ -8,6 +8,8 @@ class Customer extends Model {
   public firstName!: string | null;
   public lastName!: string | null;
   public email!: string;
+  public contactNumber!: string;
+  public cuit!: string;
 
   public static associate() {
     Customer.hasMany(Sale, {
@@ -38,7 +40,13 @@ Customer.init(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      unique: true,
+    },
+    contactNumber: {
+      type: DataTypes.STRING,
+    },
+    cuit: {
+      type: DataTypes.STRING,
       unique: true,
     },
   },

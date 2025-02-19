@@ -8,7 +8,6 @@ import productRoutes from "./routes/productRoutes";
 import productSaleRoutes from "./routes/productSaleRoutes";
 import productTypeRoutes from "./routes/productTypeRoutes";
 import saleRoutes from "./routes/saleRoutes";
-import saleStatusRoutes from "./routes/saleStatusRoutes";
 import stockRoutes from "./routes/stockRoutes";
 import cors from "cors";
 import loggerMiddleware from "./middleware/loggerMiddleware";
@@ -23,7 +22,6 @@ app.use(loggerMiddleware);
 app.use(cors());
 
 app.use("/api/stocks", stockRoutes);
-app.use("/api/sales-status", saleStatusRoutes);
 app.use("/api/sales", saleRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/product-sale", productSaleRoutes);
@@ -34,12 +32,12 @@ app.use("/api/auth", authRoutes);
 initModels();
 
 sequelize
-    .sync({ alter: true })
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Unable to connect to the database:", err);
+  .sync({ alter: true })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });

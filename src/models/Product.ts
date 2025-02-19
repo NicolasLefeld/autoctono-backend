@@ -7,6 +7,7 @@ class Product extends Model {
   public detail!: string;
   public name!: string;
   public price!: number;
+  public cost!: string;
   public productTypeId!: number;
 
   public static associate() {
@@ -39,6 +40,9 @@ Product.init(
     cost: {
       type: DataTypes.FLOAT,
       allowNull: false,
+    },
+    code: {
+      type: DataTypes.STRING,
     },
     productTypeId: {
       type: DataTypes.INTEGER,
