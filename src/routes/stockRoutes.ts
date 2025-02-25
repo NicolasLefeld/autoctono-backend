@@ -11,9 +11,9 @@ import { authenticateJWT } from "../middleware/authMiddleware";
 const router = Router();
 router.use(authenticateJWT);
 
-router.post("/", createStock);
 router.get("/", getAllStocks);
 router.get("/:id", getStock);
+router.post("/", createStock);
 router.put("/:id", updateStock);
 router.delete("/:id", deleteStock);
 

@@ -19,7 +19,7 @@ export const createSale = async (req: Request, res: Response) => {
     );
 
     for (const product of products) {
-      const { productId, unitPrice, quantity } = product;
+      const { productId, unitPrice, quantity, percentageDiscount } = product;
 
       await ProductSale.create(
         {
@@ -27,6 +27,7 @@ export const createSale = async (req: Request, res: Response) => {
           quantity: quantity,
           productId: productId,
           saleId: sale.id,
+          percentageDiscount: percentageDiscount,
         },
         { transaction }
       );
@@ -73,7 +74,6 @@ export const createSale = async (req: Request, res: Response) => {
     try {
       await transaction.rollback();
     } catch (rollbackError) {
-      // Posiblemente la transacción ya se cerró; podríamos ignorar o loguear
       console.error("Error rolling back transaction", rollbackError);
     }
     res.status(400).send(error);
@@ -112,6 +112,7 @@ export const getSaleDTO = async (req: Request, res: Response) => {
         { model: SaleStatus, as: "status" },
       ],
     });
+
     if (!saleWithDetails) {
       res.status(404).send();
     }
@@ -161,11 +162,9 @@ export const updateSale = async (req: Request, res: Response) => {
   const id = req.params.id;
   const { detail, total, customerId, statusId, products } = req.body;
 
-  // Iniciamos una transacción
   const transaction = await sequelize.transaction();
 
   try {
-    // Buscamos la venta a actualizar
     const sale = await Sale.findByPk(id, { transaction });
     if (!sale) {
       try {
@@ -176,20 +175,16 @@ export const updateSale = async (req: Request, res: Response) => {
       res.status(404).send({ message: "Sale not found" });
     }
 
-    // Actualizamos los campos básicos de la venta
     await sale?.update(
       { detail, total, customerId, statusId },
       { transaction }
     );
 
-    // Eliminamos los registros anteriores de ProductSale asociados a esta venta
     await ProductSale.destroy({ where: { saleId: id }, transaction });
 
-    // Recorremos el array de productos enviado y creamos nuevos registros en ProductSale
     for (const product of products) {
       const { productId, unitPrice, quantity } = product;
 
-      // (Opcional) Puedes verificar stock aquí, tal como en createSale
       const stock = await Stock.findOne({
         where: { productId },
         transaction,
@@ -208,7 +203,6 @@ export const updateSale = async (req: Request, res: Response) => {
         { transaction }
       );
 
-      // Actualizamos el stock (opcional, según tu lógica)
       await stock?.update(
         { quantity: stock.quantity - quantity },
         { transaction }
@@ -217,7 +211,6 @@ export const updateSale = async (req: Request, res: Response) => {
 
     await transaction.commit();
 
-    // Obtenemos la venta actualizada con todos los detalles y asociaciones
     const updatedSale = await Sale.findByPk(id, {
       include: [
         {
@@ -248,6 +241,7 @@ export const deleteSale = async (req: Request, res: Response) => {
     const deleteSale = await Sale.destroy({ where: { id } });
     if (!deleteSale) {
       res.status(404).send("Sale not found");
+      return;
     }
     res.send({ message: "Sale deleted" });
   } catch (error) {

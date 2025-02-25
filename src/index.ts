@@ -24,7 +24,7 @@ app.use(cors());
 app.use("/api/stocks", stockRoutes);
 app.use("/api/sales", saleRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/product-sale", productSaleRoutes);
+// app.use("/api/product-sale", productSaleRoutes);
 app.use("/api/product-types", productTypeRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/auth", authRoutes);

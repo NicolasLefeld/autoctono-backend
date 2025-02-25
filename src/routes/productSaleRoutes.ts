@@ -1,20 +1,17 @@
 import { Router } from "express";
 import {
-    createProductSale,
-    getProductSale,
-    getAllProductSale,
-    updateProductSale,
-    deleteProductSale,
+  getProductsSale,
+  getAllProductsSale,
 } from "../controllers/productSaleController";
 import { authenticateJWT } from "../middleware/authMiddleware";
 
 const router = Router();
 router.use(authenticateJWT);
 
-router.post("/", createProductSale);
-router.get("/", getAllProductSale);
-router.get("/:id", getProductSale);
-router.put("/:id", updateProductSale);
-router.delete("/:id", deleteProductSale);
+router.get("/", getAllProductsSale);
+router.get("/:id", getProductsSale);
+// router.post("/", createProductSale);
+// router.put("/:id", updateProductSale);
+// router.delete("/:id", deleteProductSale);
 
 export default router;
