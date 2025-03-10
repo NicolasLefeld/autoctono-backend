@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import sequelize from "../src/config/database";
+import sequelize from "./config/database";
 import { initModels } from "./models";
 import authRoutes from "./routes/authRoutes";
 import customerRoutes from "./routes/customerRoutes";
@@ -33,12 +33,12 @@ app.use("/api/auth", authRoutes);
 initModels();
 
 sequelize
-    .sync({ alter: true })
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Unable to connect to the database:", err);
+  .sync({ alter: true })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
