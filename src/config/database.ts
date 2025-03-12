@@ -3,9 +3,22 @@ import dotenv from "dotenv";
 import { parse } from "pg-connection-string";
 
 dotenv.config();
+var config = {} as any;
 
-const config = parse(process.env.DATABASE_URL as string);
+if (process.env.DATABASE_URL) {
+  config = parse(process.env.DATABASE_URL as string);
+} else {
+  // DB_NAME = autoctono;
+  // DB_USER = username;
+  // DB_PASSWORD = password;
+  // DB_HOST = localhost;
 
+  config.database = process.env.DB_NAME;
+  config.user = process.env.DB_USER;
+  config.password = process.env.DB_PASSWORD;
+  config.host = process.env.DB_HOST;
+  config.port = 5432;
+}
 const sequelize = new Sequelize(
   config.database as string,
   config.user as string,
@@ -15,12 +28,13 @@ const sequelize = new Sequelize(
     port: Number(config.port),
     dialect: "postgres",
     logging: console.log,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
+    ssl: process.env.DATABASE_URL ? true : false,
+    // dialectOptions: {
+    //   ssl: {
+    //     ssl: process.env.DATABASE_URL ? true : false,
+    //     rejectUnauthorized: false,
+    //   },
+    // },
   }
 );
 

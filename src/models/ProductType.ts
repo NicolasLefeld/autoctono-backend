@@ -13,9 +13,14 @@ const ProductType = sequelize.define("ProductType", {
   },
   code: {
     type: DataTypes.STRING,
+    unique: false,
   },
   description: {
     type: DataTypes.STRING,
+    allowNull: true,
+  },
+  defaultSalePercentage: {
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
 });
