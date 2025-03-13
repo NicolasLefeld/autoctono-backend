@@ -7,7 +7,7 @@ class Product extends Model {
   public detail!: string;
   public name!: string;
   public price!: number;
-  public cost!: string;
+  public cost!: number;
   public productTypeId!: number;
 
   public static associate() {

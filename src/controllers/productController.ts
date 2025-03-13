@@ -66,6 +66,7 @@ export const updateProductPrices = async (req: Request, res: Response) => {
 
       await productFound.update({
         price: productFound.price + productFound.price * amountToIncrease,
+        cost: productFound.cost + productFound.cost * amountToIncrease,
       });
     }
 
