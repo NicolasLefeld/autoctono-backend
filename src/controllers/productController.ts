@@ -75,6 +75,7 @@ export const updateProductPrices = async (req: Request, res: Response) => {
     res.status(400).send(error);
   }
 };
+
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;

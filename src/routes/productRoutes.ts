@@ -12,11 +12,11 @@ import { authenticateJWT } from "../middleware/authMiddleware";
 const router = Router();
 router.use(authenticateJWT);
 
-router.get("/", authenticateJWT, getAllProducts);
-router.get("/:id", authenticateJWT, getProduct);
-router.post("/", authenticateJWT, createProduct);
-router.put("/update-prices", authenticateJWT, updateProductPrices);
-router.put("/:id", authenticateJWT, updateProduct);
-router.delete("/:id", authenticateJWT, deleteProduct);
+router.get("/", getAllProducts);
+router.get("/:id", getProduct);
+router.post("/", createProduct);
+router.put("/update-prices", updateProductPrices);
+router.put("/:id", updateProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;

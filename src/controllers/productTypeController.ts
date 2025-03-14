@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import ProductType from "../models/ProductType";
+import Product from "../models/Product";
+import sequelize from "../config/database";
 
 export const createProductType = async (req: Request, res: Response) => {
   try {
@@ -41,6 +43,28 @@ export const updateProductType = async (req: Request, res: Response) => {
     }
     const updatedProductType = await ProductType.findByPk(req.params.id);
     res.send(updatedProductType);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+export const updateProductTypePrices = async (req: Request, res: Response) => {
+  try {
+    const { amountToIncrease, productTypesId } = req.body;
+
+    for (const productTypeId of productTypesId) {
+      await Product.update(
+        {
+          price: sequelize.literal(`price + price * ${amountToIncrease}`),
+          cost: sequelize.literal(`cost + cost * ${amountToIncrease}`),
+        },
+        {
+          where: { productTypeId },
+        }
+      );
+    }
+
+    res.status(200).send();
   } catch (error) {
     res.status(400).send(error);
   }

@@ -42,8 +42,6 @@ export const getCustomer = async (req: Request, res: Response) => {
 
     const currentAccount = customer.get("sales");
 
-    console.log(`\n\n${currentAccount}\n\n`);
-
     res.send({ ...customer.toJSON(), currentAccount });
   } catch (error) {
     res.status(500).send(error);
