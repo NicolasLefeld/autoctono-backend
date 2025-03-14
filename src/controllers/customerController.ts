@@ -50,13 +50,39 @@ export const getCustomer = async (req: Request, res: Response) => {
 
 export const getAllCustomers = async (req: Request, res: Response) => {
   try {
-    const customers = await Customer.findAll();
-    res.send(customers);
+    const customers = await Customer.findAll({
+      include: [
+        {
+          model: Sale,
+          as: "sales",
+          include: [
+            {
+              model: SaleStatus,
+              as: "status",
+              where: {
+                code: [SaleStatusEnum.PENDING, SaleStatusEnum.IN_PROCESS],
+              },
+              required: true,
+            },
+          ],
+          required: false,
+        },
+      ],
+    });
+
+    const customersWithBalance = customers.map((customer) => {
+      const sales = (customer.get("sales") as any[]) || [];
+
+      const balance = sales.reduce((acc, sale) => acc + sale.total, 0);
+
+      return { ...customer.toJSON(), currentAccount: balance };
+    });
+
+    res.send(customersWithBalance);
   } catch (error) {
     res.status(500).send(error);
   }
 };
-
 export const updateCustomer = async (req: Request, res: Response) => {
   try {
     const [updated] = await Customer.update(req.body, {
