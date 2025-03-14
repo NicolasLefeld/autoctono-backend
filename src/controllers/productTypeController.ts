@@ -56,7 +56,7 @@ export const updateProductTypePrices = async (req: Request, res: Response) => {
       await Product.update(
         {
           price: sequelize.literal(`price + price * ${amountToIncrease}`),
-          cost: sequelize.literal(`cost + cost * ${amountToIncrease}`),
+          //cost: sequelize.literal(`cost + cost * ${amountToIncrease}`),
         },
         {
           where: { productTypeId },
